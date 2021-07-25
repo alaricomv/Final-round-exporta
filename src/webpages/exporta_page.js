@@ -5,6 +5,7 @@ import {Table,Button, Container, Modal, ModalBody, ModalHeader, FormGroup,ModalF
 import { elementRoles } from 'aria-query';
 import logo from '../logo.jpg';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const rfq = [
   {id: 0, buyer: "Beto Enterprise", product: "Board games", supplier: "Fantasy flight", date: "24-07-2021", status: "On progress", comments: "Very good and organized"}
@@ -12,6 +13,8 @@ const rfq = [
 
 
 class Exporta_page extends React.Component{
+   
+  
 
   
     constructor(){
@@ -32,7 +35,9 @@ class Exporta_page extends React.Component{
     };
   }
 
+  
 
+  
 
     handleChange=e=>{
       this.setState({
@@ -191,7 +196,9 @@ class Exporta_page extends React.Component{
         </tbody>
         
       </Table>
-      
+       <br></br>
+
+
     </Container>
 
     <Modal isOpen={this.state.modaledit}>
