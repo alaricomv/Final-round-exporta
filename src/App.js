@@ -66,7 +66,21 @@ class App extends React.Component{
     var list = this.state.rfq;
     list.push(newvalue);
     this.setState({rfq: list})
+    this.handleReset()
   }
+
+  handleReset = () => {
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    Array.from(document.querySelectorAll("textarea")).forEach(
+      input => (input.value = "")
+    );
+    this.setState({
+      itemvalues: [{}]
+    });
+  };
+  
 
   render(){
 
