@@ -28,6 +28,7 @@ class App extends React.Component{
         status: 'Live',
         comments: ''
       },
+      modalinsert: false,
 
     };
   }
@@ -61,7 +62,7 @@ class App extends React.Component{
 
   adding=()=>{
     var newvalue={...this.state.form};
-    newvalue.id=this.state.rfq.length+1
+    newvalue.id=this.state.rfq.length;
     newvalue.date=Date().toLocaleString()
     var list = this.state.rfq;
     list.push(newvalue);
@@ -80,6 +81,14 @@ class App extends React.Component{
       itemvalues: [{}]
     });
   };
+
+  openEdit = ()=>{
+    this.setState({modalinsert:true});
+  }
+
+  closeEdit = ()=>{
+    this.setState({modalinsert:false});
+  }
   
 
   render(){
@@ -146,7 +155,7 @@ class App extends React.Component{
               <td>{information.date}</td>
               <td>{information.status}</td>
               <td>{information.comments}</td>
-              <td><Button color= "primary">Editar</Button> {"  "}
+              <td><Button color= "primary"  onClick={()=>this.openEdit()}>Editar</Button> {"  "}
               <Button color= "danger" >Eliminar</Button></td>
             </tr>
           ))}
@@ -156,45 +165,64 @@ class App extends React.Component{
       
     </Container>
 
-    <Modal>
+    <Modal isOpen={this.state.modalinsert}>
           <ModalHeader>
            <div><h3>Edit</h3></div>
           </ModalHeader>
 
           <ModalBody>
-            <FormGroup>
-              <label>
-               Id:
-              </label>
-            
-              <input
-                className="form-control"
-                readOnly
-                type="text"
-              />
-            </FormGroup>
             
             <FormGroup>
-              <label>
-                Buyer: 
-              </label>
+              
               <input
                 className="form-control"
-                name="personaje"
+                name="buyer"
                 type="text"
+                placeholder="Enter Buyer…"
               />
             </FormGroup>
+            <br></br>
             
             <FormGroup>
-              <label>
-                Anime: 
-              </label>
+              
               <input
                 className="form-control"
-                name="anime"
+                name="product"
                 type="text"
+                placeholder="Enter Product…"
+                
               />
             </FormGroup>
+            <br></br>
+            <FormGroup>
+              
+              <input
+                className="form-control"
+                name="supplier"
+                type="text"
+                placeholder="Enter Supplier…"
+                
+              />
+            </FormGroup>
+            <br></br>
+
+            <FormGroup>
+              
+
+              <select className="form-control" name="status" value={this.state.rfq.status} >
+                <option name="live"> Live</option>
+                <option name="dead">Dead</option>
+                <option name="progress"> On Progress</option>
+                <option name="hold">On Hold</option>
+                <option name="completed">Completed</option>
+              </select>
+            </FormGroup>
+            <br></br>
+            <FormGroup>
+            <textarea className="form-control" name="comments"  placeholder="Type comments..." />
+              
+            </FormGroup>
+            <br></br>
           </ModalBody>
 
           <ModalFooter>
@@ -203,10 +231,8 @@ class App extends React.Component{
             >
               Editar
             </Button>
-            <Button
-              color="danger"
-            >
-              Cancelar
+            <Button color="danger"  onClick={()=>this.closeEdit()}>
+              Cancel
             </Button>
           </ModalFooter>
         </Modal>
