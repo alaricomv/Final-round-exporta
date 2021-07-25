@@ -6,6 +6,7 @@ import { elementRoles } from 'aria-query';
 import logo from '../logo.jpg';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 const rfq = [
   {id: 0, buyer: "Beto Enterprise", product: "Board games", supplier: "Fantasy flight", date: "24-07-2021", status: "On progress", comments: "Very good and organized"}
@@ -279,6 +280,8 @@ class Exporta_page extends React.Component{
             </Button>
           </ModalFooter>
         </Modal>
+
+        <Link to="/user">Go to user page</Link>
 
      
   </>)

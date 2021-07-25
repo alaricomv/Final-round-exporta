@@ -11,6 +11,7 @@ import ReactDOM from 'react-dom';
 import { PDFViewer } from '@react-pdf/renderer';
 import jsPDF from 'jspdf';
 import small from './exporta.png';
+import {Link} from "react-router-dom";
 
 
 const rfq = [
@@ -187,6 +188,8 @@ class User extends React.Component{
         </tbody>
         
       </Table>
+
+      <Link to="/">Go to exporta page</Link>
 
       
     </Container>
