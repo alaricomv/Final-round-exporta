@@ -10,35 +10,13 @@ import ReactPDF from '@react-pdf/renderer';
 import ReactDOM from 'react-dom';
 import { PDFViewer } from '@react-pdf/renderer';
 import jsPDF from 'jspdf';
+import small from './exporta.png';
 
-const styles = StyleSheet.create({
-    page: {
-      flexDirection: 'row',
-      backgroundColor: '#E4E4E4'
-    },
-    section: {
-      margin: 10,
-      padding: 10,
-      flexGrow: 1
-    }
-  });
 
 const rfq = [
   {id: 0, buyer: "Beto Enterprise", product: "Board games", supplier: "Fantasy flight", date: "24-07-2021", status: "On progress", comments: "Very good and organized"}
 ]
 
-var MyDocument = () => (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text>Section #1</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>Section #2</Text>
-        </View>
-      </Page>
-    </Document>
-  );
 
 class User extends React.Component{
 
@@ -81,9 +59,19 @@ class User extends React.Component{
        list.map((register)=>{
        if(data.id == register.id){
 
-        var doc = new jsPDF('landscape','px','a4','false');
-        doc.addPage()
-        doc.text(120,410,data.product)
+        var doc = new jsPDF('portrait','px','a4','false');
+        doc.addImage(small,'png', 10,20,75,45)
+        doc.text(280,10,Date().toLocaleString())
+        doc.setFont('Helvetica','bold')
+        doc.text(175,100,"Exporta Technologies")
+        doc.text(200,120,"Date created: "+ data.date)
+        doc.text(200,140,"Id: "+data.id)
+        doc.text(175,180,"Product: "+data.product)
+        doc.text(175,200,"Buyer: "+data.buyer)
+        doc.text(175,220,"Supplier: "+data.supplier)
+        doc.text(175,240,"Status: "+data.status)
+        doc.text(200,260,"Comments: ")
+        doc.text(175,280,data.comments)
         doc.save(data.date+'_Sale.pdf')
       }
       counter++;
