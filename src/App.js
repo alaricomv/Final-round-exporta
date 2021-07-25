@@ -10,9 +10,24 @@ const rfq = [
 ]
 class App extends React.Component{
 
-  state = {
+  
+
+  constructor(props){
+    super(props);
+    
+    this.state = {
     rfq: rfq
   }
+  }
+  
+
+
+  editButtonClickHandler(rfq) {
+    this.setState({
+      buyer: rfq.buyer
+    });
+  }
+
   render(){
 
   return(
@@ -32,12 +47,12 @@ class App extends React.Component{
           {this.state.rfq.map((information)=>(
             <tr>
               <td>{information.id}</td>
-              <td>{information.buyer}</td>
+              <td><input type="text" value ={information.buyer} onChange={console.log("hola")}/></td>
               <td>{information.product}</td>
               <td>{information.supplier}</td>
               <td>{information.date}</td>
               <td>{information.status}</td>
-              <td><Button color= "primary" >Editar</Button> {"  "}
+              <td><Button color= "primary" onClick={() => this.editButtonClickHandler(rfq)} >Editar</Button> {"  "}
               <Button color= "danger" >Eliminar</Button></td>
             </tr>
           ))}
