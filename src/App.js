@@ -28,7 +28,7 @@ class App extends React.Component{
         status: 'Live',
         comments: ''
       },
-      modalinsert: false,
+      modaledit: false,
 
     };
   }
@@ -70,6 +70,35 @@ class App extends React.Component{
     this.handleReset()
   }
 
+  editing=(data)=>{
+    var counter = 0;
+    var list = this.state.rfq;
+    list.map((register)=>{
+      if(data.id == register.id){
+        list[counter].product = data.product;
+        list[counter].buyer = data.buyer;
+        list[counter].supplier = data.supplier;
+        list[counter].status = data.status;
+        list[counter].comments = data.comments;
+      }
+      counter++;
+    })
+    this.setState({rfq:list});
+    this.closeEdit();
+  }
+
+  eliminate=(data)=>{
+    var counter=0;
+    var list =this.state.rfq;
+    list.map((register)=>{
+      if(register.id==data.id){
+        list.splice(counter,1)
+      }
+      counter++
+    })
+    this.setState({rfq:list});
+  }
+
   handleReset = () => {
     Array.from(document.querySelectorAll("input")).forEach(
       input => (input.value = "")
@@ -82,12 +111,12 @@ class App extends React.Component{
     });
   };
 
-  openEdit = ()=>{
-    this.setState({modalinsert:true});
+  openEdit = (register)=>{
+    this.setState({modaledit:true, form:register});
   }
 
   closeEdit = ()=>{
-    this.setState({modalinsert:false});
+    this.setState({modaledit:false});
   }
   
 
@@ -155,8 +184,8 @@ class App extends React.Component{
               <td>{information.date}</td>
               <td>{information.status}</td>
               <td>{information.comments}</td>
-              <td><Button color= "primary"  onClick={()=>this.openEdit()}>Editar</Button> {"  "}
-              <Button color= "danger" >Eliminar</Button></td>
+              <td><Button color= "primary"  onClick={()=>this.openEdit(information)}>Editar</Button> {"  "}
+              <Button color= "danger"  onClick={()=>this.eliminate(information)}>Eliminar</Button></td>
             </tr>
           ))}
         </tbody>
@@ -165,7 +194,7 @@ class App extends React.Component{
       
     </Container>
 
-    <Modal isOpen={this.state.modalinsert}>
+    <Modal isOpen={this.state.modaledit}>
           <ModalHeader>
            <div><h3>Edit</h3></div>
           </ModalHeader>
@@ -179,6 +208,8 @@ class App extends React.Component{
                 name="buyer"
                 type="text"
                 placeholder="Enter Buyer…"
+                onChange={this.handleChange}
+                value={this.state.form.buyer}
               />
             </FormGroup>
             <br></br>
@@ -190,6 +221,8 @@ class App extends React.Component{
                 name="product"
                 type="text"
                 placeholder="Enter Product…"
+                onChange={this.handleChange}
+                value={this.state.form.product}
                 
               />
             </FormGroup>
@@ -201,6 +234,8 @@ class App extends React.Component{
                 name="supplier"
                 type="text"
                 placeholder="Enter Supplier…"
+                onChange={this.handleChange}
+                value={this.state.form.supplier}
                 
               />
             </FormGroup>
@@ -209,7 +244,7 @@ class App extends React.Component{
             <FormGroup>
               
 
-              <select className="form-control" name="status" value={this.state.rfq.status} >
+              <select className="form-control" name="status" value={this.state.form.status} onChange={this.handleChange}>
                 <option name="live"> Live</option>
                 <option name="dead">Dead</option>
                 <option name="progress"> On Progress</option>
@@ -219,7 +254,7 @@ class App extends React.Component{
             </FormGroup>
             <br></br>
             <FormGroup>
-            <textarea className="form-control" name="comments"  placeholder="Type comments..." />
+            <textarea className="form-control" name="comments"  placeholder="Type comments..." onChange={this.handleChange} value={this.state.form.comments}/>
               
             </FormGroup>
             <br></br>
@@ -228,6 +263,7 @@ class App extends React.Component{
           <ModalFooter>
             <Button
               color="primary"
+              onClick={()=>this.editing(this.state.form)}
             >
               Editar
             </Button>
